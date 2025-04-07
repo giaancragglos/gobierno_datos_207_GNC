@@ -1,0 +1,13 @@
+
+aws glue start-job-run \
+  --job-name limpiar_datos \
+  --arguments '{"--input_path":"s3://crudos-gnc/retail_store_inventory.csv","--output_path":"s3://limpios-gnc/data_limpia","--file_format":"parquet"}'
+
+aws glue start-job-run \
+  --job-name Agregados \
+  --arguments '{"--input_path":"s3://limpios-gnc/data_limpia/","--output_path":"s3://agregados-gnc/agregados","--file_format":"parquet"}'
+
+
+aws glue start-job-run \
+  --job-name mL \
+  --arguments '{"--input_path":"s3://agregados-gnc/agregados/","--output_path":"s3://ml-gnc/mL","--file_format":"parquet"}'
